@@ -22,6 +22,10 @@ public class Item {
     private boolean taxed = false;
     private BigDecimal taxes;
 
+    public Item() {
+        
+    }
+    
     public Item(String name, BigDecimal price, Integer quantity, Boolean imported, String kind) {
         this.name = name;
         this.price = price;
@@ -44,11 +48,11 @@ public class Item {
         return tax;
     }
 
-    private boolean isNotTaxed() {
+     boolean isNotTaxed() {
         return kind.equalsIgnoreCase("book") || kind.equalsIgnoreCase("medical") || kind.equalsIgnoreCase("food");
     }
 
-    private BigDecimal getAllTaxes() {
+     BigDecimal getAllTaxes() {
         Double taxes = this.calculateTaxesPercentage();
         BigDecimal itemTax = getPrice().multiply(new BigDecimal(taxes)).multiply(new BigDecimal(getQuantity()));
 
@@ -61,7 +65,8 @@ public class Item {
     public void calculatePrice() {
         if (!isTaxed()) {
             BigDecimal allTaxes = getAllTaxes();
-            setPrice(getPrice().add(allTaxes).setScale(2, RoundingMode.CEILING));
+            System.out.println(allTaxes);
+            setPrice(getPrice().add(allTaxes).setScale(2, RoundingMode.HALF_UP));
             setTaxes(allTaxes);
             this.taxed = true;
         }
