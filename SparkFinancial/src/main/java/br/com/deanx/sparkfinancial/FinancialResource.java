@@ -30,6 +30,7 @@ class FinancialResource implements Resource {
             return service.getResult(request.body());
         });
         
+        
     }
     
     
